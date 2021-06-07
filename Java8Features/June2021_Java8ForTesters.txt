@@ -1,0 +1,399 @@
+Java8 Features
+------------------------
+
+Code optimization?
+
+
+
+3 different types of programming languages
+
+1.object oriented pL ---Java,python
+2. Procedural pL - javascripts
+3. Functional pL - skala, LISP ************
+
+
+Java8 : Enable concepts of  functional PL
+---------
+
+1. Lamda Expression.
+2. Functional Interface
+3. Default methods & static methods
+4. predefined functional interfaces
+	a. predicate, BiPredicate
+	b. Function,BiFunction
+	c. Consumer,BiConsumer
+	d. Supplier (Dont have Bisupplier)
+5. Double colon operator(::)
+6. StreamsAPI
+7. Date and Time API( Joda API)
+8. optional class
+9. Nashron javascript engine
+... etc
+
+Lamda Expression.
+
+- Lamda calculus
+-1930
+-Alonzo church
+
+-LISP
+-Skala
+-C
+-python
+-Object C
+-Ruby
+
+java -2014 java8
+
+
+what is lamda expression?
+ it is an anonymous function/method( Function without name)
+---> Nameless
+----> without return type
+----> without access modifier
+
+Ex1: public void m1(){
+	System.out.println("Hello java");
+        }
+
+===
+
+()->{System.out.println("Hello java"); }
+===
+()->System.out.println("Hello java");
+
+
+Ex2:
+public void add2(int a, int b){
+	s.o.p(a+b);
+}
+===
+(int a, int b)->s.o.p(a+b);
+==
+(a,b)->s.o.p(a+b);
+
+Ex3: public int squarenum(int a){
+	return a*a;
+}
+===
+(int a)->{return a*a;} *****
+===
+(a)-> {a*a;}
+===
+a -> a*a;
+
+Ex4:
+
+public void addtion(){
+int count=0;
+for(int i=0;i<=100;i=i+10){
+     count =count +i;
+}
+s.o.p("Total sum="+count);
+}
+==
+() ->{
+int count=0;
+for(int i=0;i<=100;i=i+10){
+     count =count +i;
+}
+s.o.p("Total sum="+count);
+}
+
+
+Ex5:  print Length of a string ( input parameter string)
+public void strlen(String s){
+ s.o.p(s.length());
+}
+==
+(s)->s.o.p(s.length());
+==
+s->s.o.p(s.length());
+
+Ex6: add Input 3 integer numbers and add and  return
+
+public int add3(int a,int b, int c){
+ return a+b+c;
+}
+===
+(a,b, c)-> a+b+c;
+
+
+ex7: multiply 3 input numbers(int type) and return product
+(a,b,c)->a*b*c;
+
+How to run this Lamda expression???
+
+
+Functional Interface(FI)?
+Any interface consists of Single Abstract Method(SAM) called as FI.
+
+Ex1: 
+interface interf{
+public void m1();
+}
+
+===FI?yes
+
+Ex2:
+interface Interf{
+	public void m1();
+     default void m2(){
+	s.o.p("default method");
+	}
+    public static void m3(){
+	s.o.p("static method");
+	}
+}
+-===FI? yes
+
+Ex3:  
+interface P{
+	public void m1();
+}
+interface C extends P{
+
+}
+
+===interface C ==FI???yes
+Ex4;
+
+interface P{
+	public void m1();
+}
+interface C extends P{
+	public void m2()
+	public static void m3(){
+	s.o.p("Ram");
+}
+}
+
+interface c, FI?no
+interface P,FI?yes
+
+ JDK8 and Eclipse?
+
+
+@FunctionalInterface
+
+
+MultiThreading
+--------------------------
+Runnable (I)
+run();(SAM)
+
+2 types of MultiTasking
+-----------------------------------
+1. process based multitasking: play song, eclipse, notepad, excel
+2. Thread based multitasking: program level
+
+Runnable(I)
+run();
+
+
+Collection APIs
+------------------------
+comparable(I)
+comparTo(SAM);
+
+obj1.compareTo.obj2  
+obj1 < obj2: -ve value : obj1 kept before obj2
+obj1 > obj2 : +ve value : obj1 keeps after obj2
+obj1== obj2: 0 : no change
+
+
+comparable (I) : compareTo() -----> Default sorting (Ascending order)
+comparator(I) : compare() --------->customized sorting.
+
+ Default methods 
+-------------------------
+- New feature in jdk8
+- to have concrete methods in inteface
+- default void d(){
+	---
+	---
+	---
+}
+-default is not a accessmodifier
+
+
+interface vs Abstractclass
+
+1. we cant have c.methods with accessmodifier / default method in Abstract class
+2. cant have constructor / we can have constructor
+3. member variables by default it is static and final / member variables can be static and final
+
+interface with default method (not equal to ) Abstract method
+
+
+static methods in interface
+----------------------------------------
+
+4 Built in Functional interfaces in java8
+----------------------------------------------------------
+1. Predicate
+2. Function
+3. Consumer
+4. Supplier
+
+Predicate ?: predicate is a FI and is a Boolean Function returns boolean value
+	- java.util.functions
+	-SAM : test();
+prototype for Predicate
+---------------------------------
+interface Predicate<T>{
+	public boolean test(T t);
+}
+
+predicateJoining
+----------------------------
+default methods: .negate(), .and() ,.or()
+static method: IsEqual
+p1------------>number is greater than 10?
+p2------------>number is even?
+p1.nagate()---->number is not greater than 10?
+p1.and(p2)--> number is greater 10 and even
+p1.or(p2)---> number is greater 10 or even
+
+Function: FI, it is like predicate but can return any datatype.
+---------------------------------------------------------------------------------------------
+--> SAM : apply()
+
+prototype:
+interface Function<T,R>{
+	public R apply(T t);
+}
+
+Fuctionalchaining
+-------------------------
+ f1.andThen(f2); ---->first it will take f1 , result of f1 will be applied to f2
+f1.compose(f2)-------> first it will take f2, result of f2 will be applied to f1.
+
+static method
+----------------------
+identity
+
+
+Consumer: is a FI, where it will take an input of any datatype and not return any value
+----------------
+---FI
+---java.util.functions
+---accept() (SAM)
+
+prototype:
+
+interface Consumer<T>{
+
+	public void accept(T t);
+}
+
+ConsumerChaining
+----------------------------
+Default method: c1.andThen(c2)
+
+no static method
+
+Supplier: is a FI, which will not take any input and return data.
+no default and static methods
+SAM: get();
+
+prototype: 
+interface Supplier<R>{
+   public R get();
+}
+
+BiPredicate
+------------------
+--test() (SAM)
+prototype:
+interface BiPredicate<T,U>{
+	public boolean test(T t, U u);
+}
+
+BiFunction
+-------------------
+-apply() (SAM)
+
+prototype
+
+interface BiFunction(T,U,R){
+	public R apply(T t, U u);
+}
+
+
+BiConsumer
+------------------------
+- accept(SAM)
+prototype
+
+interface BiConsumer(T,U){
+
+	public void accept(T t, U u);
+}
+
+
+
+Double colon operator(::) == method reference ( alternate for lamda function)
+------------------------------------------------------------------------------------------------------------------
+
+Steams:process data in a collection,( collectionAPIs,userdefined group of data, Arrays )
+IOStream - read and write data into file
+
+Steams:
+
+Stream s=c.stream();
+
+Stream --interface
+steam - method
+
+2 stages to process a collection of data
+
+1. configure - filter, map
+2. processing - collect
+
+methods
+----------------
+filter
+map
+collect
+sort
+count
+min
+max
+foreach
+toArray
+
+
+Stream for usedefined group of values
+----------------------------------------------------------
+
+
+
+Two types of Stream
+------------------------------
+1. Squential Stream
+2. Parallelel Stream
+
+
+Date and Time Functions in jdk8 (joda.org - Joda APIs)
+----------------------------------------------------------------------------
+Date,calender,Time(< jdk8) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
